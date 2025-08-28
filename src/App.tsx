@@ -186,10 +186,20 @@ function computeQuantitiesPure(room: Room, settings = DEFAULTS) {
   return { floorSqft, baseboardLf, wallPaintGal, ceilingPaintGal, drywallArea };
 }
 
-function drywallSheetsFor(areaSqft: number, sheetLenFt: number, settings = DEFAULTS) {
-  const sheetSqft = 4 * sheetLenFt;
-  const withWaste = areaSqft * (1 + settings.drywallWaste);
-  return roundUp(withWaste / sheetSqft, 1);
+function DigitsInput({ value, onChange, placeholder = "", className = "", ...rest }) {
+  return (
+    <input
+      type="text"
+      inputMode="numeric"      // shows numeric keypad on iOS and Android
+      pattern="[0-9]*"         // mobile browsers prefer digits
+      className={className}
+      placeholder={placeholder}
+      value={value ?? ""}
+      onChange={(e) => onChange(e.target.value.replace(/\D/g, ""))} // keep digits only
+      onBlur={(e) => onChange(e.target.value.replace(/\D/g, ""))}
+      {...rest}
+    />
+  );
 }
 
 // CSV helpers
