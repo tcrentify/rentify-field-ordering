@@ -206,7 +206,7 @@ type CsvRow = {
 function buildCsvString(rows: CsvRow[]) {
   const headers = ["Retailer","SKU","Item Name","Quantity","Unit","Room","Property","Notes"];
   const esc = (v: any) => {
-    const s = String(v ?? "").replaceAll('"', '""');
+    const s = String(v ?? "").replace(/"/g, '""');
     return '"' + s + '"';
   };
   const out = [headers.join(",")];
